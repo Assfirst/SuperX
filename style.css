@@ -1,0 +1,351 @@
+/* Base Styles */
+body {
+    font-family: 'Kanit', sans-serif;
+    background: linear-gradient(to bottom right, #1a1a2e, #16213e);
+    color: #e2e8f0;
+    min-height: 100vh;
+}
+
+#feed {
+    max-height: 600px;
+    overflow-y: auto;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Post Styles */
+.post {
+    @apply bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 shadow-xl mb-4;
+}
+
+.post:hover {
+    @apply border-gray-600 -translate-y-1;
+}
+
+.post-header {
+    @apply flex justify-between items-center mb-4;
+}
+
+.post-date {
+    @apply text-gray-400 text-sm;
+}
+
+.hashtag {
+    @apply inline-block bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full text-sm mr-2;
+}
+
+/* Comment Styles */
+.comments-section {
+    @apply mt-6 space-y-4;
+}
+
+.comment {
+    @apply bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 backdrop-blur-sm;
+}
+
+.comment:hover {
+    @apply border-gray-600/50 transform transition-all duration-300;
+}
+
+.action-btn {
+    @apply flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-700/50 hover:bg-gray-600/50 transition-all;
+}
+
+.post-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Input Styles */
+textarea {
+    @apply bg-gray-700/30 border border-gray-600 rounded-lg p-4 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-300;
+}
+
+button {
+    @apply transform transition-all duration-300;
+}
+
+button:hover {
+    @apply scale-105;
+}
+
+#loginSection {
+    text-align: center;
+    margin: 40px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+#loginSection button {
+    margin: 10px;
+    min-width: 200px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+#loginSection button:active {
+    transform: scale(0.95);
+}
+
+/* Google Button Specific Style */
+#googleLogin {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.search-section {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+}
+
+#hashtagSearch {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+    font-family: 'Kanit', sans-serif;
+}
+
+#hashtagResults {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+/* เพิ่มส่วนนี้ในไฟล์ CSS */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-profile span {
+    flex-grow: 1;
+    font-weight: 500;
+}
+
+#logoutBtn {
+    @apply bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all ml-auto;
+}
+
+#logoutBtn:hover {
+    background-color: #dc2626;
+}
+
+/* Custom Register Button Style */
+#registerBtn {
+    background-color: #22c55e;
+    transition: all 0.3s ease;
+}
+
+#registerBtn:hover {
+    background-color: #16a34a;
+    transform: translateY(-1px);
+}
+
+/* Custom SweetAlert2 Styles */
+.swal2-popup {
+    @apply bg-gray-800 text-white rounded-xl border border-gray-700;
+}
+
+.swal2-title {
+    @apply text-white;
+}
+
+.swal2-html-container {
+    @apply text-gray-300;
+}
+
+.swal2-input, .swal2-textarea {
+    @apply bg-gray-700 text-white border-gray-600 rounded-lg focus:border-blue-500;
+}
+
+.swal2-validation-message {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border-radius: 6px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/* SweetAlert2 Custom Styles for Comment */
+.swal2-popup textarea {
+    @apply bg-gray-700/30 border border-gray-600 rounded-lg p-4 text-white placeholder-gray-400 
+    focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition-all duration-300;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.swal2-popup textarea:focus {
+    @apply border-blue-500 ring-2 ring-blue-500;
+}
+
+.swal2-popup .swal2-actions button {
+    @apply px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105;
+}
+
+/* Custom Navbar Styles */
+.nav-shadow {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Animation Classes */
+.fade-enter {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .container {
+        @apply px-4;
+    }
+    
+    .post {
+        @apply p-4;
+    }
+}
+
+/* Chat & Notification Styles */
+.chat-message {
+    @apply bg-gray-700/50 p-3 rounded-lg max-w-[80%];
+}
+
+.chat-message.sent {
+    @apply bg-blue-500/50 ml-auto;
+}
+
+.chat-message.received {
+    @apply bg-gray-700/50;
+}
+
+.friend-item {
+    @apply flex items-center gap-3 p-2 rounded-lg hover:bg-gray-700/50 cursor-pointer transition-all duration-300;
+}
+
+.friend-item.online::before {
+    content: '';
+    @apply w-2 h-2 bg-green-500 rounded-full absolute -top-1 -right-1;
+}
+
+.notification-item {
+    @apply flex items-center gap-3 p-3 rounded-lg bg-gray-700/30 hover:bg-gray-700/50 cursor-pointer transition-all duration-300;
+}
+
+.notification-item.unread {
+    @apply bg-blue-500/20;
+}
+
+/* Animation for notifications */
+@keyframes notification-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.notification-pulse {
+    animation: notification-pulse 1s infinite;
+}
+
+/* Friend Request Animation */
+@keyframes friendRequest {
+    0% { transform: scale(0.95); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.friend-request-animation {
+    animation: friendRequest 0.3s ease-in-out;
+}
+
+/* Sidebar Animation */
+.sidebar-enter {
+    transform: translateX(100%);
+}
+
+.sidebar-enter-active {
+    transform: translateX(0);
+    transition: transform 300ms ease-in-out;
+}
+
+.sidebar-exit {
+    transform: translateX(0);
+}
+
+.sidebar-exit-active {
+    transform: translateX(100%);
+    transition: transform 300ms ease-in-out;
+}
+
+/* Hover Effects */
+.hover\:scale-105:hover {
+    transform: scale(1.05);
+}
+
+/* Animation for buttons */
+.transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+}
+
+/* Profile Section Styles */
+#userProfile {
+    @apply mb-8;
+}
+
+#userProfile img {
+    @apply object-cover;
+    transition: transform 0.3s ease;
+}
+
+#userProfile img:hover {
+    transform: scale(1.1);
+}
+
+#userProfile .font-medium {
+    @apply text-lg;
+}
+
+#editProfileBtn {
+    @apply hover:bg-gray-700/50 rounded-lg p-2 transition-colors;
+}
+
+#logoutBtn {
+    @apply bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors;
+}
+
+/* Profile Image Animation */
+@keyframes profilePulse {
+    0% { border-color: #3b82f6; }
+    50% { border-color: #60a5fa; }
+    100% { border-color: #3b82f6; }
+}
+
+#userProfile img {
+    animation: profilePulse 2s infinite;
+}

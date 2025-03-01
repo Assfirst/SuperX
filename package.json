@@ -1,0 +1,19 @@
+{
+  "name": "superx",
+  "version": "1.0.0",
+  "description": "SuperX Chat & Feed Application",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "http-server -p 3000 --ssl --cert ./cert.pem --key ./key.pem",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "firebase": "^10.8.0",
+    "sweetalert2": "^11.10.5"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "tailwindcss": "^3.4.1"
+  }
+}

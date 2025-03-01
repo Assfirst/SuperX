@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Auth Test</title>
+</head>
+<body>
+    <button id="testAuth">Test Auth</button>
+    <script type="module">
+        import { auth, GoogleAuthProvider, signInWithPopup } 
+        from './firebase.js';
+
+        document.getElementById('testAuth').onclick = async () => {
+            try {
+                const provider = new GoogleAuthProvider();
+                const result = await signInWithPopup(auth, provider);
+                console.log('Auth successful:', result.user.email);
+                alert('Authentication successful!');
+            } catch (error) {
+                console.error('Auth error:', error);
+                alert(`Auth error: ${error.message}`);
+            }
+        };
+    </script>
+</body>
+</html>

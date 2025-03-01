@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperX Chat & Feed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-gray-800/95 backdrop-blur-sm border-b border-gray-700 text-white p-4 fixed w-full top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/>
+                    <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/>
+                </svg>
+                <h1 class="text-xl font-bold">SuperX Chat & Feed</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="notificationBtn" class="relative">
+                    <svg class="w-6 h-6 text-gray-400 hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                    <span id="notificationBadge" class="absolute -top-1 -right-1 bg-red-500 text-xs w-5 h-5 flex items-center justify-center rounded-full hidden">0</span>
+                </button>
+            </div>
+            <div id="navProfile" class="hidden items-center gap-4">
+                <img id="navUserImg" class="w-10 h-10 rounded-full border-2 border-blue-500" src="" alt="Profile">
+                <span id="navUserName" class="font-medium"></span>
+                <button id="navLogoutBtn" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105">
+                    ออกจากระบบ
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- เพิ่มหลัง navbar แต่ก่อน main content -->
+    <div id="notificationPanel" class="fixed top-16 right-4 w-80 bg-gray-800/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl hidden animate__animated animate__fadeIn">
+        <div class="p-4 border-b border-gray-700">
+            <h3 class="text-lg font-semibold">การแจ้งเตือน</h3>
+        </div>
+        <div id="notificationList" class="max-h-96 overflow-y-auto p-2 space-y-2">
+            <!-- notifications will be added here -->
+        </div>
+    </div>
+
+    <!-- Chat Panel -->
+    <div id="chatPanel" class="fixed bottom-4 right-4 w-80 bg-gray-800/95 backdrop-blur-sm border border-gray-700 rounded-lg shadow-xl">
+        <div class="p-4 border-b border-gray-700 flex justify-between items-center">
+            <h3 class="text-lg font-semibold">แชท</h3>
+            <button id="minimizeChatBtn" class="text-gray-400 hover:text-white">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="friendsList" class="max-h-96 overflow-y-auto p-2 space-y-2">
+            <!-- friends list will be added here -->
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 mt-24">
+        <!-- Login Section -->
+        <div id="loginSection" class="max-w-md mx-auto bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl border border-gray-700 shadow-xl animate__animated animate__fadeIn">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-white">SuperX</h2>
+                <p class="text-gray-400 mt-2">เข้าสู่ระบบเพื่อเริ่มใช้งาน</p>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- Google Login -->
+                <button id="googleLogin" 
+                    class="w-full flex items-center justify-center gap-3 bg-white text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
+                    <img src="https://www.google.com/favicon.ico" class="w-5 h-5" alt="Google">
+                    <span class="font-medium">เข้าสู่ระบบด้วย Google</span>
+                </button>
+
+                <!-- Email Login -->
+                <button id="emailLogin" 
+                    class="w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <span>เข้าสู่ระบบด้วยอีเมล</span>
+                </button>
+
+                <!-- Register -->
+                <button id="registerBtn" 
+                    class="w-full bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                    <span>สมัครสมาชิกใหม่</span>
+                </button>
+            </div>
+
+            <div class="mt-6 text-center text-sm text-gray-400">
+                การเข้าสู่ระบบถือว่าคุณยอมรับ
+                <a href="#" class="text-blue-400 hover:underline">ข้อกำหนดการใช้งาน</a>
+                และ
+                <a href="#" class="text-blue-400 hover:underline">นโยบายความเป็นส่วนตัว</a>
+            </div>
+        </div>
+
+        <!-- Feed Section -->
+        <div id="userContent" class="hidden">
+            <!-- Profile Section -->
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- User Profile Card -->
+                <div class="md:col-span-1">
+                    <div class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700">
+                        <div class="flex flex-col items-center">
+                            <img id="profileImage" src="" alt="Profile" 
+                                class="w-24 h-24 rounded-full border-4 border-blue-500 mb-4">
+                            <h2 id="profileName" class="text-xl font-bold text-white mb-2"></h2>
+                            <p id="profileEmail" class="text-gray-400 mb-4"></p>
+                            <button id="editProfileBtn" 
+                                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all">
+                                แก้ไขโปรไฟล์
+                            </button>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-gray-700">
+                            <div class="flex justify-around text-center">
+                                <div>
+                                    <div id="friendCount" class="text-xl font-bold text-white">0</div>
+                                    <div class="text-gray-400">เพื่อน</div>
+                                </div>
+                                <div>
+                                    <div id="postCount" class="text-xl font-bold text-white">0</div>
+                                    <div class="text-gray-400">โพสต์</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feed Section -->
+                <div class="md:col-span-2">
+                    <!-- Create Post -->
+                    <div class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 mb-6">
+                        <textarea id="postInput" 
+                            class="w-full bg-gray-700/50 text-white rounded-lg p-4 mb-4"
+                            placeholder="เขียนโพสต์ของคุณ... (ใช้ #hashtag เพื่อจัดหมวดหมู่)"
+                            rows="3"></textarea>
+                        <div class="flex justify-between items-center">
+                            <button id="createPost" 
+                                class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-all">
+                                โพสต์
+                            </button>
+                            <div class="text-gray-400 text-sm">ใช้ #hashtag เพื่อจัดหมวดหมู่</div>
+                        </div>
+                    </div>
+
+                    <!-- Feed -->
+                    <div id="feed" class="space-y-6"></div>
+                </div>
+            </div>
+
+            <!-- Friends List Sidebar -->
+            <div id="friendsSidebar" 
+                class="fixed right-0 top-0 h-full w-80 bg-gray-800/95 backdrop-blur-sm border-l border-gray-700 p-4 transform transition-transform duration-300 translate-x-full">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-semibold text-white">รายชื่อเพื่อน</h3>
+                    <button id="closeFriendsSidebar" class="text-gray-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="friendsList" class="space-y-4"></div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
