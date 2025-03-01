@@ -349,3 +349,29 @@ button:hover {
 #userProfile img {
     animation: profilePulse 2s infinite;
 }
+
+/* Animation for new posts */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate__fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Existing posts fade in smoothly */
+#feed > div {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+#feed > div:nth-child(n) {
+    animation-delay: calc(0.1s * var(--delay, 0));
+}

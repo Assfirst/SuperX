@@ -476,7 +476,6 @@ const listenToAuthChanges = () => {
 // Setup feed
 const setupFeed = () => {
     try {
-        // ยกเลิก listener เก่าถ้ามี
         if (feedUnsubscribe) {
             feedUnsubscribe();
         }
@@ -487,20 +486,29 @@ const setupFeed = () => {
             return;
         }
 
-        // สร้าง query
+        // สร้าง query โดยเรียงตาม createdAt แบบ desc (ล่าสุดขึ้นก่อน)
         const feedQuery = query(
             collection(db, "posts"),
-            orderBy("createdAt", "desc")
+            orderBy("createdAt", "desc")  // เรียงจากใหม่ไปเก่า
         );
 
-        // ตั้งค่า listener ใหม่
+        // ตั้งค่า listener
         feedUnsubscribe = onSnapshot(feedQuery, 
             (snapshot) => {
-                feedElement.innerHTML = "";
-                snapshot.forEach(doc => {
-                    const post = doc.data();
-                    const postElement = createPostElement(post, doc.id);
-                    feedElement.appendChild(postElement);
+                snapshot.docChanges().forEach((change) => {
+                    const post = change.doc.data();
+                    const postId = change.doc.id;
+                    const postElement = createPostElement(post, postId);
+
+                    if (change.type === "added") {
+                        if (change.newIndex === 0) {
+                            // ถ้าเป็นโพสต์ใหม่ ให้ใส่ไว้บนสุด
+                            feedElement.insertBefore(postElement, feedElement.firstChild);
+                        } else {
+                            // ถ้าเป็นโพสต์เก่า ให้ต่อท้าย
+                            feedElement.appendChild(postElement);
+                        }
+                    }
                 });
             },
             (error) => {
@@ -521,7 +529,7 @@ const setupFeed = () => {
 const createPostElement = (post, postId) => {
     const div = document.createElement('div');
     div.id = `post-${postId}`;
-    div.className = 'bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 mb-4';
+    div.className = 'bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 mb-4 animate__animated animate__fadeIn';
 
     const timestamp = new Date(post.createdAt).toLocaleString('th-TH', {
         year: 'numeric',
